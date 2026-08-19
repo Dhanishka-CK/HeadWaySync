@@ -1,0 +1,499 @@
+:root {
+  --navy: #0B1F3A;
+  --navy-2: #142c4f;
+  --paper: #F6F3EC;
+  --card: #FFFFFF;
+  --amber: #FFB703;
+  --amber-deep: #E09400;
+  --green: #1F9D77;
+  --green-deep: #147a5c;
+  --red: #D6402F;
+  --red-deep: #AE2E20;
+  --ink: #12181F;
+  --slate: #5B6472;
+  --line: #E4DFD3;
+
+  --font-display: 'Barlow Condensed', 'Noto Sans Tamil', sans-serif;
+  --font-body: 'Inter', 'Noto Sans Tamil', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* ---------- Header / departure-board topbar ---------- */
+.topbar {
+  background: var(--navy);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 3px solid var(--amber);
+}
+
+.topbar-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.85;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+.nav-link:hover { opacity: 1; border-bottom-color: var(--amber); }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.route-chip {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  background: var(--amber);
+  color: var(--navy);
+  border-radius: 8px;
+  padding: 6px 10px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+}
+
+.route-name {
+  font-size: 12px;
+  color: #C9D3E0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lang-toggle {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 6px 12px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lang-opt { opacity: 0.55; transition: opacity 0.15s ease; }
+.lang-opt.active { opacity: 1; color: var(--amber); }
+.lang-div { opacity: 0.4; }
+
+/* ---------- Shell ---------- */
+.app-shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 18px 16px 40px;
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.2px;
+  margin: 28px 0 12px;
+  color: var(--navy);
+}
+
+/* ---------- Stop picker ---------- */
+.stop-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stop-picker-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--slate);
+}
+
+.select-wrap {
+  position: relative;
+}
+
+#stopSelect {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 40px 13px 14px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+#stopSelect:focus { border-color: var(--navy); }
+
+.select-caret {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--slate);
+  pointer-events: none;
+}
+
+/* ---------- Signal board (signature element) ---------- */
+.signal-board {
+  position: relative;
+  margin-top: 18px;
+  border-radius: 18px;
+  padding: 26px 22px;
+  overflow: hidden;
+  background: var(--green);
+  transition: background 0.5s ease;
+  box-shadow: 0 10px 30px -12px rgba(11, 31, 58, 0.35);
+}
+
+.signal-board[data-status="wait"],
+.signal-board[data-status="wait_short"] {
+  background: var(--red);
+}
+
+.signal-board[data-status="board_if_urgent"] {
+  background: var(--amber-deep);
+}
+
+.signal-board[data-status="normal"] {
+  background: var(--green);
+}
+
+.signal-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 0%, rgba(255,255,255,0.25), transparent 55%);
+  pointer-events: none;
+}
+
+.signal-content {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.signal-icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signal-icon svg { width: 24px; height: 24px; }
+
+.signal-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.05;
+  color: #fff;
+  margin: 2px 0 6px;
+  letter-spacing: 0.2px;
+}
+
+.signal-subtitle {
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.92);
+  margin: 0;
+  max-width: 46ch;
+}
+
+.signal-eta {
+  position: relative;
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  background: rgba(255,255,255,0.16);
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.signal-eta .num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* subtle "just updated" flicker, signature transit-board feel */
+.signal-board.flicker { animation: flicker 0.5s ease; }
+@keyframes flicker {
+  0% { filter: brightness(1); }
+  30% { filter: brightness(1.35); }
+  100% { filter: brightness(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-board.flicker { animation: none; }
+}
+
+/* ---------- Upcoming list ---------- */
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upcoming-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 16px;
+}
+
+.upcoming-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tier-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tier-dot.low { background: var(--green); }
+.tier-dot.moderate { background: var(--amber-deep); }
+.tier-dot.high { background: var(--red); }
+
+.upcoming-label {
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.upcoming-bus-id {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11.5px;
+  color: var(--navy);
+  background: var(--amber);
+  border-radius: 999px;
+  padding: 2px 9px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.upcoming-sub {
+  font-size: 12.5px;
+  color: var(--slate);
+  margin-top: 1px;
+}
+
+.upcoming-eta {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.upcoming-eta small {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--slate);
+  margin-left: 3px;
+}
+
+/* ---------- Map ---------- */
+.map-section { margin-top: 6px; }
+
+.route-direction-note {
+  margin: -4px 0 12px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--slate);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber-deep);
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+
+/* Small chevrons placed along the route polyline so the loop's single
+   travel direction is visible on the map itself, not just described in
+   text. Rotated per-marker via inline transform (see app.js). */
+.direction-arrow {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy);
+  font-size: 15px;
+  line-height: 1;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff;
+}
+
+.legend-arrow {
+  font-style: normal;
+  color: var(--navy);
+  font-size: 13px;
+}
+
+#map {
+  height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #dfe7f0;
+}
+
+.legend {
+  display: flex;
+  gap: 18px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--slate);
+}
+
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot-green { background: var(--green); }
+.dot-amber { background: var(--amber-deep); }
+.dot-red { background: var(--red); }
+
+/* Leaflet marker labels */
+.bus-marker {
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.bus-marker.low { background: var(--green); }
+.bus-marker.moderate { background: var(--amber-deep); }
+.bus-marker.high { background: var(--red); }
+
+.stop-marker {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 2.5px solid #fff;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stop-marker-num {
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
+}
+
+/* Always-on stop name labels (Leaflet permanent tooltip) */
+.leaflet-tooltip.stop-label {
+  background: #fff;
+  color: var(--navy);
+  border: 1px solid rgba(11,31,58,0.18);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  white-space: nowrap;
+}
+.leaflet-tooltip.stop-label::before {
+  border-top-color: rgba(11,31,58,0.18);
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  margin-top: 34px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--slate);
+  opacity: 0.8;
+}
+
+/* ---------- Lang mode (text swapped via JS textContent, not CSS visibility) ---------- */
+body.lang-ta { font-family: var(--font-body); }
+body.lang-ta .signal-title,
+body.lang-ta .brand-name { font-family: 'Noto Sans Tamil', var(--font-display); }

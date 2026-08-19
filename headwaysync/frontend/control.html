@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HeadwaySync — Control Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="/static/style.css" />
+<link rel="stylesheet" href="/static/control.css" />
+</head>
+<body class="control-body">
+
+  <!-- Toast/notification stack for recommended actions -->
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="route-chip">42</span>
+        <div class="brand-text">
+          <span class="brand-name">HeadwaySync</span>
+          <span class="route-name" data-en="Control Room — Operator View" data-ta="கட்டுப்பாட்டு அறை — இயக்குநர் பார்வை">Control Room — Operator View</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+          <span class="lang-opt active" data-lang="en">EN</span>
+          <span class="lang-div">/</span>
+          <span class="lang-opt" data-lang="ta">தமிழ்</span>
+        </button>
+        <a class="nav-link" href="/" data-en="Rider View" data-ta="பயணி பார்வை">Rider View</a>
+        <button class="correction-toggle" id="correctionToggle" aria-pressed="true">
+          <span class="dot"></span>
+          <span id="correctionLabel">Correction: ON</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="control-shell">
+
+    <section class="kpi-row" id="kpiRow" aria-label="Network summary">
+      <div class="kpi"><span class="kpi-label" data-en="Active alerts" data-ta="செயலில் உள்ள எச்சரிக்கைகள்">Active alerts</span><span class="kpi-value" id="kpiAlerts">0</span></div>
+      <div class="kpi"><span class="kpi-label" data-en="Holds issued (session)" data-ta="பிடிப்புகள் (இந்த அமர்வு)">Holds issued (session)</span><span class="kpi-value" id="kpiHolds">0</span></div>
+      <div class="kpi"><span class="kpi-label" data-en="Speed-ups issued (session)" data-ta="வேக அதிகரிப்புகள் (இந்த அமர்வு)">Speed-ups issued (session)</span><span class="kpi-value" id="kpiSpeedups">0</span></div>
+      <div class="kpi"><span class="kpi-label" data-en="ML forecast — buses to watch" data-ta="ML முன்னறிவிப்பு — கவனிக்க வேண்டிய பேருந்துகள்">ML forecast — buses to watch</span><span class="kpi-value" id="kpiForecast">0</span></div>
+    </section>
+
+    <section class="map-section fleet-map-section" aria-label="Live fleet map">
+      <h2 class="section-label" data-en="Live fleet — Route 42" data-ta="நேரடி பேருந்து கூட்டம் — வழி 42">Live fleet — Route 42</h2>
+      <div id="fleetMap"></div>
+      <div class="legend">
+        <span class="legend-item"><i class="dot dot-green"></i><span data-en="Normal" data-ta="இயல்பு">Normal</span></span>
+        <span class="legend-item"><i class="dot dot-amber"></i><span data-en="Early warning" data-ta="முன் எச்சரிக்கை">Early warning</span></span>
+        <span class="legend-item"><i class="dot dot-red"></i><span data-en="Bunching risk" data-ta="கூட்டு அபாயம்">Bunching risk</span></span>
+        <span class="legend-item"><i class="dot dot-navy"></i><span data-en="Lagging" data-ta="பின்தங்கியுள்ளது">Lagging</span></span>
+      </div>
+    </section>
+
+    <section class="pairs-section" aria-label="Bus pair status">
+      <h2 class="section-label" data-en="Live bus pairs — Route 42" data-ta="நேரடி பேருந்து ஜோடிகள் — வழி 42">Live bus pairs — Route 42</h2>
+      <div class="pairs-table" id="pairsTable">
+        <div class="pairs-head">
+          <span data-en="Trail → Lead" data-ta="பின் → முன்">Trail → Lead</span>
+          <span data-en="Headway" data-ta="இடைவெளி நேரம்">Headway</span>
+          <span data-en="vs Scheduled" data-ta="திட்டமிட்டதோடு ஒப்பிடின்">vs Scheduled</span>
+          <span data-en="Status" data-ta="நிலை">Status</span>
+          <span data-en="Recommended action" data-ta="பரிந்துரைக்கப்படும் நடவடிக்கை">Recommended action</span>
+        </div>
+        <div id="pairsBody"></div>
+      </div>
+    </section>
+
+    <section class="events-section" aria-label="Correction & alert log">
+      <h2 class="section-label" data-en="Event log" data-ta="நிகழ்வு பதிவு">Event log</h2>
+      <div class="events-list" id="eventsList"></div>
+    </section>
+
+    <footer class="app-footer">
+      <span data-en="Positions and corrections are simulated for this demo. Rule-based control decisions (control.py) — auditable, not a black box." data-ta="இந்த டெமோவிற்காக இடங்களும் திருத்தங்களும் உருவகப்படுத்தப்பட்டுள்ளன. விதி அடிப்படையிலான கட்டுப்பாட்டு முடிவுகள் (control.py) — கண்காணிக்கக்கூடியவை, மறைமுகமானவை அல்ல.">Positions and corrections are simulated for this demo. Rule-based control decisions (control.py) — auditable, not a black box.</span>
+    </footer>
+
+  </main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="/static/control.js"></script>
+</body>
+</html>

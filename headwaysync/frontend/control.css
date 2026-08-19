@@ -1,0 +1,254 @@
+.control-body {
+  background: var(--paper);
+}
+
+/* ---------- Fleet map (numbered buses) ---------- */
+.fleet-map-section { margin-bottom: 28px; }
+
+#fleetMap {
+  height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #dfe7f0;
+}
+
+.dot-navy { background: var(--navy); }
+
+/* Control-room bus marker: bigger than the rider-view dot so the plate
+   number is legible directly on the map, colored by this bus's own
+   trail->lead pair status (not occupancy, which is the rider view's job). */
+.bus-marker-labeled {
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.bus-marker-labeled.NORMAL { background: var(--green); }
+.bus-marker-labeled.EARLY_WARNING { background: var(--amber-deep); }
+.bus-marker-labeled.BUNCHING_RISK { background: var(--red); }
+.bus-marker-labeled.LAGGING { background: var(--navy); }
+
+/* ---------- Toast / notification stack ---------- */
+.toast-stack {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 340px;
+}
+.toast {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 24px rgba(11,31,58,0.35);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  border-left: 4px solid var(--amber);
+  animation: toast-in 0.25s ease;
+}
+.toast.BUNCHING_RISK { border-left-color: var(--red); }
+.toast.EARLY_WARNING { border-left-color: var(--amber); }
+.toast.LAGGING { border-left-color: #8CA3C4; }
+.toast-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+  margin-bottom: 3px;
+}
+.toast-fade { animation: toast-out 0.4s ease forwards; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateX(24px); }
+}
+
+@media (max-width: 760px) {
+  .toast-stack { left: 12px; right: 12px; max-width: none; }
+}
+
+.correction-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.correction-toggle .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+.correction-toggle[aria-pressed="false"] .dot {
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+}
+
+.control-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kpi-label {
+  font-size: 12px;
+  color: var(--slate);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.pairs-section { margin-bottom: 28px; }
+
+.pairs-table {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.pairs-head, .pair-row {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr 1fr 1fr 2.4fr;
+  gap: 12px;
+  padding: 12px 16px;
+  align-items: center;
+}
+.pairs-head {
+  background: var(--navy);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.pair-row {
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.pair-row .pair-name { font-weight: 700; color: var(--navy); }
+.pair-row .pair-forecast {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #7C3AED;
+  background: rgba(124,58,237,0.12);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.status-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 3px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.status-badge.NORMAL { background: rgba(31,157,119,0.12); color: var(--green-deep); }
+.status-badge.EARLY_WARNING { background: rgba(255,183,3,0.18); color: var(--amber-deep); }
+.status-badge.BUNCHING_RISK { background: rgba(214,64,47,0.14); color: var(--red-deep); }
+.status-badge.LAGGING { background: rgba(11,31,58,0.1); color: var(--navy); }
+
+.action-text { color: var(--slate); font-size: 13px; line-height: 1.4; }
+.action-text.acted { color: var(--ink); font-weight: 600; }
+
+.events-section { margin-bottom: 10px; }
+.events-list {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.event-row {
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.event-row:first-child { border-top: none; }
+.event-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+.event-tag.NORMAL { background: rgba(31,157,119,0.12); color: var(--green-deep); }
+.event-tag.EARLY_WARNING { background: rgba(255,183,3,0.18); color: var(--amber-deep); }
+.event-tag.BUNCHING_RISK { background: rgba(214,64,47,0.14); color: var(--red-deep); }
+.event-tag.LAGGING { background: rgba(11,31,58,0.1); color: var(--navy); }
+.event-msg { color: var(--ink); }
+.events-empty { padding: 16px; color: var(--slate); font-size: 13px; }
+
+@media (max-width: 760px) {
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .pairs-head { display: none; }
+  .pair-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 12px 16px;
+  }
+}

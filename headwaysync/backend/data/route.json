@@ -1,0 +1,82 @@
+{
+  "route_id": "R42",
+  "route_name_en": "Route 42 — Gandhipuram \u2192 Thudiyalur \u2192 Saravanampatti (Loop)",
+  "route_name_ta": "\u0bb5\u0bb4\u0bbf 42 \u2014 \u0b95\u0bbe\u0ba8\u0bcd\u0ba4\u0bbf\u0baa\u0bc1\u0bb0\u0bae\u0bcd \u2192 \u0ba4\u0bc2\u0b9f\u0bbf\u0baf\u0bb2\u0bc2\u0bb0\u0bcd \u2192 \u0b9a\u0bb0\u0bb5\u0ba3\u0bae\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bbf (\u0bb5\u0bb3\u0bc8\u0bb5\u0bc1)",
+  "total_length_m": 20782.8,
+  "stops": [
+    {
+      "id": "S1",
+      "name_en": "Gandhipuram Bus Stand",
+      "name_ta": "\u0b95\u0bbe\u0ba8\u0bcd\u0ba4\u0bbf\u0baa\u0bc1\u0bb0\u0bae\u0bcd \u0baa\u0bc7\u0bb0\u0bc1\u0ba8\u0bcd\u0ba4\u0bc1 \u0ba8\u0bbf\u0bb2\u0baf\u0bae\u0bcd",
+      "lat": 11.0306,
+      "lon": 76.967,
+      "dist_m": 0.0,
+      "kind": "terminus"
+    },
+    {
+      "id": "S2",
+      "name_en": "Thudiyalur",
+      "name_ta": "\u0ba4\u0bc2\u0b9f\u0bbf\u0baf\u0bb2\u0bc2\u0bb0\u0bcd",
+      "lat": 11.081,
+      "lon": 76.946,
+      "dist_m": 7357.3,
+      "kind": "high_demand"
+    },
+    {
+      "id": "S3",
+      "name_en": "Vellakinar",
+      "name_ta": "\u0bb5\u0bc6\u0bb3\u0bcd\u0bb3\u0b95\u0bbf\u0ba9\u0bbe\u0bb0\u0bcd",
+      "lat": 11.0836,
+      "lon": 76.9611,
+      "dist_m": 9030.2,
+      "kind": "normal"
+    },
+    {
+      "id": "S4",
+      "name_en": "KCT (Kumaraguru College of Technology)",
+      "name_ta": "\u0b95\u0bc7.\u0b9a\u0bbf.\u0b9f\u0bbf. (\u0b95\u0bc1\u0bae\u0bb0\u0b95\u0bc1\u0bb0\u0bc1 \u0ba4\u0bca\u0bb4\u0bbf\u0bb2\u0bcd\u0ba8\u0bc1\u0b9f\u0bcd\u0baa\u0b95\u0bcd \u0b95\u0bb2\u0bcd\u0bb2\u0bc2\u0bb0\u0bbf)",
+      "lat": 11.0779,
+      "lon": 76.989,
+      "dist_m": 12140.0,
+      "kind": "high_demand"
+    },
+    {
+      "id": "S5",
+      "name_en": "KGiSL Institute of Technology",
+      "name_ta": "\u0b95\u0bc7.\u0b9c\u0bbf.\u0b90.\u0b8e\u0bb8\u0bcd.\u0b8e\u0bb2\u0bcd.",
+      "lat": 11.0848,
+      "lon": 76.9984,
+      "dist_m": 13420.9,
+      "kind": "high_demand"
+    },
+    {
+      "id": "S6",
+      "name_en": "Saravanampatti",
+      "name_ta": "\u0b9a\u0bb0\u0bb5\u0ba3\u0bae\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bbf",
+      "lat": 11.079,
+      "lon": 77.001,
+      "dist_m": 14125.5,
+      "kind": "high_demand"
+    }
+  ],
+  "shape": [
+    {
+      "name_en": "Saibaba Colony (Mettupalayam Rd, via)",
+      "lat": 11.0306,
+      "lon": 76.9512,
+      "dist_m": 1724.4
+    },
+    {
+      "name_en": "Ganapathy (Sathy Rd, via)",
+      "lat": 11.0422,
+      "lon": 76.9816,
+      "dist_m": 18732.7
+    },
+    {
+      "name_en": "Gandhipuram Bus Stand (loop close)",
+      "lat": 11.0306,
+      "lon": 76.967,
+      "dist_m": 20782.8
+    }
+  ]
+}

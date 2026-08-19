@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>HeadwaySync — Live Bus Guidance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- Departure-board style header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="route-chip" id="routeChip">42</span>
+        <div class="brand-text">
+          <span class="brand-name">HeadwaySync</span>
+          <span class="route-name" id="routeName">Loading route…</span>
+        </div>
+      </div>
+      <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+        <span class="lang-opt active" data-lang="en">EN</span>
+        <span class="lang-div">/</span>
+        <span class="lang-opt" data-lang="ta">தமிழ்</span>
+      </button>
+      <a class="nav-link" href="/control">Control Room</a>
+    </div>
+  </header>
+
+  <main class="app-shell">
+
+    <!-- Stop picker -->
+    <section class="stop-picker" aria-label="Choose your stop">
+      <label class="stop-picker-label" data-en="Your stop" data-ta="உங்கள் நிறுத்தம்">Your stop</label>
+      <div class="select-wrap">
+        <select id="stopSelect" aria-label="Select your bus stop"></select>
+        <svg class="select-caret" width="14" height="9" viewBox="0 0 14 9" fill="none">
+          <path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Signature element: live signal board -->
+    <section class="signal-board" id="signalBoard" data-status="normal">
+      <div class="signal-glow"></div>
+      <div class="signal-content">
+        <div class="signal-icon" id="signalIcon" aria-hidden="true"></div>
+        <div class="signal-text">
+          <h1 class="signal-title" id="signalTitle">Getting live status…</h1>
+          <p class="signal-subtitle" id="signalSubtitle">Hang tight while we check nearby buses.</p>
+        </div>
+      </div>
+      <div class="signal-eta" id="signalEta"></div>
+    </section>
+
+    <!-- Upcoming buses, plain language, no numbers beyond friendly ETA -->
+    <section class="upcoming" aria-label="Upcoming buses at your stop">
+      <h2 class="section-label" data-en="Next at this stop" data-ta="இந்த நிறுத்தத்தில் அடுத்து">Next at this stop</h2>
+      <div class="upcoming-list" id="upcomingList"></div>
+    </section>
+
+    <!-- Live map -->
+    <section class="map-section" aria-label="Live bus locations">
+      <h2 class="section-label" data-en="Live buses on Route 42" data-ta="வழி 42 நேரடி பேருந்துகள்">Live buses on Route 42</h2>
+      <p class="route-direction-note" id="routeDirectionNote" aria-live="polite"></p>
+      <div id="map"></div>
+      <div class="legend">
+        <span class="legend-item"><i class="dot dot-green"></i><span data-en="Seats available" data-ta="இருக்கை உள்ளது">Seats available</span></span>
+        <span class="legend-item"><i class="dot dot-amber"></i><span data-en="Standing room" data-ta="நின்று செல்லலாம்">Standing room</span></span>
+        <span class="legend-item"><i class="dot dot-red"></i><span data-en="Crowded" data-ta="நெரிசல்">Crowded</span></span>
+        <span class="legend-item"><i class="legend-arrow" aria-hidden="true">➜</i><span data-en="Direction of travel" data-ta="பயண திசை">Direction of travel</span></span>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <span data-en="Positions are simulated for this demo." data-ta="இந்த டெமோவிற்காக இடங்கள் உருவகப்படுத்தப்பட்டுள்ளன.">Positions are simulated for this demo.</span>
+    </footer>
+
+  </main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
